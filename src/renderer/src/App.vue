@@ -10,6 +10,7 @@ const ipcHandle = () => window.electron.ipcRenderer.send('ping')
   <div class="text">
     Build an Electron app with
     <span class="vue">Vue</span>
+    <a-button type="primary">Primary Button</a-button>
     and
     <span class="ts">TypeScript</span>
   </div>

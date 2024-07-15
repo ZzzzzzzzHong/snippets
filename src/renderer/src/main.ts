@@ -2,5 +2,12 @@ import './styles/main.css'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import antdComponents from './configs/antd.config'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+antdComponents.forEach((component) => {
+  app.use(component)
+})
+
+app.mount('#app')
