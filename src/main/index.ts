@@ -6,10 +6,13 @@ import icon from '../../resources/icon.png?asset'
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 400,
+    height: 500,
     show: false,
-    autoHideMenuBar: true,
+    autoHideMenuBar: true, // 隐藏菜单栏
+    transparent: true,
+    alwaysOnTop: true, // 置于顶层
+    frame: false, // 去掉应用栏
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
@@ -17,6 +20,7 @@ function createWindow(): void {
     }
   })
 
+  mainWindow.webContents.openDevTools() // 调试工具
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
