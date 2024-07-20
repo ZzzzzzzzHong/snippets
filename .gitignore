@@ -3,5 +3,5 @@ dist
 out
 .DS_Store
 *.log*
-/src/renderer/src/style/*.css
+/src/renderer/src/styles/*.css
 
