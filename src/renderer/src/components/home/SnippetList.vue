@@ -33,6 +33,7 @@ watch(props, () => {
 const copyContent = (index: number) => {
   if (dataL.value)
     navigator.clipboard.writeText(props.searchData[index].content)
+  window.api.hideWindow()
 }
 const changeData = (event: KeyboardEvent) => {
   if (event.code === 'ArrowUp') {
