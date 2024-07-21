@@ -1,9 +1,4 @@
-type resDataType = {
-  id: number
-  content: string
-}
-
-const result: resDataType[] = [
+const result = [
   {
     id: 1,
     content:
