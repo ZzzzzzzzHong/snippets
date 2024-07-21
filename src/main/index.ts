@@ -2,9 +2,10 @@ import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+import registerShortcut from './shortcut'
 import './ipcMain'
 
-function createWindow(): void {
+function createWindow(): BrowserWindow {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 400,
@@ -38,6 +39,8 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  return mainWindow
 }
 
 // This method will be called when Electron has finished
@@ -57,7 +60,8 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'))
 
-  createWindow()
+  const win = createWindow()
+  registerShortcut(win)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
