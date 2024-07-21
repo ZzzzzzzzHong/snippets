@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-4 py-2 text-gray-800 text-sm rounded-md bg-gray-50 overflow-hidden"
+    class="px-3 py-2 text-gray-800 text-sm rounded-md bg-gray-50 overflow-hidden"
   >
     <a-input v-model:value="searchKey" size="large" class="bg-gray-200" />
     <p class="text-gray-500 text-center text-sm my-1">Hong</p>

@@ -1,9 +1,9 @@
 <template>
   <div class="drag">
-    <HomePage></HomePage>
+    <Home></Home>
   </div>
 </template>
 
 <script setup lang="ts">
-import HomePage from './views/HomePage.vue'
+import Home from './views/Home.vue'
 </script>
