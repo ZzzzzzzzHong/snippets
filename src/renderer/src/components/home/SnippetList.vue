@@ -27,11 +27,11 @@ watch(dataL, () => {
 })
 // 将内容复制到剪切板
 const copyContent = (index: number) => {
-  if (dataL.value)
+  if (dataL.value) {
     navigator.clipboard.writeText(store.searchData[index].content)
-  store.$reset()
-
-  window.api.hideWindow()
+    store.$reset()
+    window.api.hideWindow()
+  }
 }
 const changeData = (event: KeyboardEvent) => {
   if (event.code === 'ArrowUp') {
