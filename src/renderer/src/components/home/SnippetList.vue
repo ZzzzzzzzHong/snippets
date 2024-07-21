@@ -26,9 +26,9 @@ watch(dataL, () => {
   activeIndex.value = 0
 })
 // 将内容复制到剪切板
-const copyContent = (index: number) => {
+const copyContent = async (index: number) => {
   if (dataL.value) {
-    navigator.clipboard.writeText(store.searchData[index].content)
+    await navigator.clipboard.writeText(store.searchData[index].content)
     store.$reset()
     window.api.hideWindow()
   }
