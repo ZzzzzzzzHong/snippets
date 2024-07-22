@@ -1,21 +1,32 @@
-import { app, globalShortcut, BrowserWindow, dialog } from 'electron'
+import {
+  app,
+  globalShortcut,
+  BrowserWindow,
+  dialog,
+  IpcMainEvent,
+  ipcMain
+} from 'electron'
 
-// 注册全局快捷键
-const registerShortcut = (win: BrowserWindow) => {
-  // 注册一个'CommandOrControl+H' 快捷键监听器
-  const ret = globalShortcut.register('CommandOrControl+H', () => {
+// 注册全局快捷键来动态对搜索栏进行显隐
+const registerShortcut = (shortcut: string, win: BrowserWindow) => {
+  if (!shortcut) {
+    shortcut = 'CommandOrControl+H' // 默认快捷键
+  }
+  if (globalShortcut.isRegistered(shortcut)) {
+    dialog.showErrorBox('温馨提示', '快捷键注册失败，该快捷键已被占用')
+    return false
+  }
+  globalShortcut.unregisterAll() // 注销之前的快捷键
+  // 重新注册快捷键监听器
+  return globalShortcut.register(shortcut, () => {
     win.isVisible() ? win.hide() : win.show()
   })
-
-  // 注册失败，全局快捷键冲突
-  if (!ret) {
-    console.log('registration failed')
-    dialog.showErrorBox('温馨提示', '快捷键注册失败，请检查快捷键是否已被占用')
-  }
-
-  // 检查快捷键是否注册成功
-  console.log(globalShortcut.isRegistered('CommandOrControl+H'))
 }
+
+ipcMain.on('setShortcut', (event: IpcMainEvent, shortcut: string) => {
+  console.log('event', BrowserWindow.fromWebContents(event.sender))
+  registerShortcut(shortcut, BrowserWindow.fromWebContents(event.sender)!)
+})
 
 app.on('will-quit', () => {
   // 注销所有快捷键
@@ -23,3 +34,6 @@ app.on('will-quit', () => {
 })
 
 export default registerShortcut
+
+// todo:动态注册全局快捷键
+export const registerAppGlobShortcut = () => {}
