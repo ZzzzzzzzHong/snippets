@@ -6,8 +6,12 @@ import icon from '../../resources/icon.png?asset'
 function createWindow(): BrowserWindow {
   // Create the browser window.
   const win = new BrowserWindow({
-    width: 400,
-    height: 500,
+    width: 500,
+    height: 460,
+    minWidth: 500,
+    minHeight: 460,
+    maxWidth: 500,
+    maxHeight: 460,
     show: false,
     autoHideMenuBar: true, // 隐藏菜单栏
     transparent: true,
