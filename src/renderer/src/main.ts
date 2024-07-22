@@ -1,5 +1,6 @@
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
+import '@icon-park/vue-next/styles/index.css'
 import App from './App.vue'
 import antdComponents from './configs/antd.config'
 import './styles/index'
