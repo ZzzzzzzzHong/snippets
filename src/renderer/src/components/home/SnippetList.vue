@@ -3,7 +3,7 @@
     <div
       v-for="(data, index) in store.searchData"
       :key="data.id"
-      class="p-2 truncate rounded-md cursor-pointer hover:bg-gray-200"
+      class="p-2 mt-2 truncate rounded-md cursor-pointer hover:bg-gray-200"
       :class="{ 'bg-gray-200': activeIndex === index }"
       @click="copyContent(index)"
     >

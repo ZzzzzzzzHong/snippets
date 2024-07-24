@@ -1,6 +1,6 @@
 <template>
   <div
-    class="p-3 pb-2 text-gray-800 text-sm rounded-md bg-gray-50 overflow-hidden"
+    class="drag px-3 py-2.5 text-gray-800 text-sm rounded-md bg-gray-50 overflow-hidden"
   >
     <Search></Search>
     <div class="nodrag max-h-80 overflow-y-auto">
