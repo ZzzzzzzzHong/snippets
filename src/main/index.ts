@@ -1,7 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import registerShortcut from './shortcut'
-import createWindow from './createWindow'
+import { createWindow } from './window'
 import './ipcMain'
 
 // This method will be called when Electron has finished

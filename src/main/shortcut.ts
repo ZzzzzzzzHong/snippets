@@ -6,6 +6,7 @@ import {
   IpcMainEvent,
   ipcMain
 } from 'electron'
+import { getSenderWindow } from './window'
 
 // 注册全局快捷键来动态对搜索栏进行显隐
 const registerShortcut = (shortcut: string, win: BrowserWindow) => {
@@ -24,8 +25,7 @@ const registerShortcut = (shortcut: string, win: BrowserWindow) => {
 }
 
 ipcMain.on('setShortcut', (event: IpcMainEvent, shortcut: string) => {
-  console.log('event', BrowserWindow.fromWebContents(event.sender))
-  registerShortcut(shortcut, BrowserWindow.fromWebContents(event.sender)!)
+  registerShortcut(shortcut, getSenderWindow(event))
 })
 
 app.on('will-quit', () => {

@@ -1,4 +1,4 @@
-import { shell, BrowserWindow } from 'electron'
+import { shell, BrowserWindow, IpcMainEvent } from 'electron'
 import { join } from 'path'
 import { is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -46,4 +46,8 @@ function createWindow(): BrowserWindow {
   return win
 }
 
-export default createWindow
+function getSenderWindow(event: IpcMainEvent): BrowserWindow {
+  return BrowserWindow.fromWebContents(event.sender)!
+}
+
+export { createWindow, getSenderWindow }
