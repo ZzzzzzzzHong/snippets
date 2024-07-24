@@ -5,6 +5,7 @@ declare global {
     electron: ElectronAPI
     api: {
       hideWindow: () => void
+      setIgnoreMouseEvents: (isIgnore: boolean) => void
     }
   }
 }
