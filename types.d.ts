@@ -1,0 +1,1 @@
+type WindowNameType = 'home' | 'config'
