@@ -5,6 +5,7 @@ import icon from '../../resources/icon.png?asset'
 import winConfig from './windowConfig'
 
 function createWindow(winType: WindowNameType): BrowserWindow {
+  const config = winConfig[winType]
   // Create the browser window.
   const win = new BrowserWindow(
     Object.assign(
@@ -22,11 +23,13 @@ function createWindow(winType: WindowNameType): BrowserWindow {
           sandbox: false
         }
       },
-      winConfig[winType]
+      config
     )
   )
 
-  // win.webContents.openDevTools() // 调试工具
+  if (is.dev && config.openDevTools) {
+    win.webContents.openDevTools() // 调试工具
+  }
 
   win.on('ready-to-show', () => {
     win.show()
@@ -40,7 +43,7 @@ function createWindow(winType: WindowNameType): BrowserWindow {
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
   if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    win.loadURL(process.env['ELECTRON_RENDERER_URL'])
+    win.loadURL(join(process.env['ELECTRON_RENDERER_URL'], `#${config.hash}`))
   } else {
     win.loadFile(join(__dirname, '../renderer/index.html'))
   }

@@ -1,19 +1,24 @@
 import { BrowserWindowConstructorOptions } from 'electron'
 
+export interface OptionsType extends BrowserWindowConstructorOptions {
+  hash: string
+  openDevTools?: boolean
+}
 const winConfig = {
-  home: <BrowserWindowConstructorOptions>{
+  home: <OptionsType>{
     width: 500,
     height: 460,
-    minWidth: 500,
-    minHeight: 460,
-    maxWidth: 500,
-    maxHeight: 460
+    resizable: false,
+    hash: 'home',
+    openDevTools: false
   },
-  config: <BrowserWindowConstructorOptions>{
+  config: <OptionsType>{
     width: 800,
     height: 660,
     minWidth: 800,
-    minHeight: 600
+    minHeight: 600,
+    hash: 'config',
+    openDevTools: false
   }
 }
 
