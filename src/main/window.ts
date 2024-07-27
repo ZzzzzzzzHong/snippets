@@ -15,7 +15,7 @@ function createWindow(winType: WindowNameType): BrowserWindow {
         show: false,
         autoHideMenuBar: true, // 隐藏菜单栏
         transparent: true,
-        alwaysOnTop: true, // 置于顶层
+        alwaysOnTop: false, // 置于顶层
         frame: false, // 去掉应用栏
         ...(process.platform === 'linux' ? { icon } : {}),
         webPreferences: {
