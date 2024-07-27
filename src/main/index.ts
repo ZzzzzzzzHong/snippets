@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app } from 'electron'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import registerShortcut from './shortcut'
 import { createWindow } from './window'
@@ -18,14 +18,9 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  const win = createWindow()
-  registerShortcut('CommandOrControl+H', win)
+  const homeWin = createWindow('home')
 
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
+  registerShortcut('CommandOrControl+H', homeWin)
 })
 
 // Quit when all windows are closed, except on macOS. There, it's common

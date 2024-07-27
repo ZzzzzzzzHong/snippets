@@ -6,6 +6,7 @@ declare global {
     api: {
       hideWindow: () => void
       setIgnoreMouseEvents: (isIgnore: boolean) => void
+      openWindow: (winType: WindowNameType) => void
     }
   }
 }

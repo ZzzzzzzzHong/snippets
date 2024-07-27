@@ -3,9 +3,12 @@ import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  hideWindow: () => ipcRenderer.send('hideWindow'),
+  hideHomeWindow: () => ipcRenderer.send('hideWindow'),
   setIgnoreMouseEvents: (ignore: boolean) => {
     ipcRenderer.send('setIgnoreMouseEvents', ignore)
+  },
+  openWindow: (winType: WindowNameType) => {
+    ipcRenderer.send('createWindow', winType)
   }
 }
 

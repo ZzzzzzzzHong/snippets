@@ -5,6 +5,7 @@
       theme="outline"
       size="20"
       class="nodrag cursor-pointer ml-2 text-gray-600"
+      @click="openConfigWin"
     />
   </div>
 </template>
@@ -15,4 +16,8 @@ import { Association } from '@icon-park/vue-next'
 import { useHomeStore } from '@renderer/stores/useHomeStore'
 
 const { searchKey } = storeToRefs(useHomeStore())
+
+const openConfigWin = () => {
+  window.api.openWindow('config')
+}
 </script>
