@@ -27,6 +27,7 @@
     "ant-design-vue": "^4.2.3",
     "electron-updater": "^6.1.7",
     "pinia": "^2.1.7",
+    "sqlite3": "^5.1.7",
     "vue-router": "^4.4.0"
   },
   "devDependencies": {
