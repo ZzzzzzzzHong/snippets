@@ -9,14 +9,16 @@ const winConfig = {
     width: 500,
     height: 460,
     resizable: false,
+    alwaysOnTop: true,
     hash: 'home',
-    openDevTools: false
+    openDevTools: true
   },
   config: <OptionsType>{
     width: 800,
     height: 660,
     minWidth: 800,
     minHeight: 600,
+    alwaysOnTop: false,
     hash: 'config',
     openDevTools: false
   }
