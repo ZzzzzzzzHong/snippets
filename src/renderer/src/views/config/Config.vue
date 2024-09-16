@@ -8,12 +8,12 @@
     <div class="flex-1 flex">
       <ul class="w-20 mt-1 text-center text-lg">
         <li>
-          <DocumentFolder theme="outline" />
+          <BookOne theme="outline" />
           <P>片段</P>
         </li>
         <li>
           <SettingConfig theme="outline" />
-          <P>配置</P>
+          <P>设置</P>
         </li>
       </ul>
       <div
@@ -26,7 +26,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { CloseSmall, DocumentFolder, SettingConfig } from '@icon-park/vue-next'
+import { BookOne, CloseSmall, SettingConfig } from '@icon-park/vue-next'
+import router from '@renderer/router'
+router.push('/config/snippets')
 </script>
 
 <style lang="less" scoped>
