@@ -10,8 +10,8 @@ const api = {
   openWindow: (winType: WindowNameType) => {
     ipcRenderer.send('createWindow', winType)
   },
-  sql: (queryType: string, sql: string) => {
-    return ipcRenderer.invoke('sql', queryType, sql)
+  sql: async (queryType: SQLType, sql: string) => {
+    return await ipcRenderer.invoke('sql', queryType, sql)
   }
 }
 

@@ -3,7 +3,7 @@ import * as query from './query'
 
 ipcMain.handle(
   'sql',
-  (event: IpcMainInvokeEvent, queryType: string, sql: string) => {
-    return query[queryType](sql)
+  async (event: IpcMainInvokeEvent, queryType: SQLType, sql: string) => {
+    return await query[queryType](sql)
   }
 )

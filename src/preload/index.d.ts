@@ -7,7 +7,7 @@ declare global {
       hideHomeWindow: () => void
       setIgnoreMouseEvents: (isIgnore: boolean) => void
       openWindow: (winType: WindowNameType) => void
-      sql: (queryType: string, sql: string) => Promise
+      sql: (queryType: SQLType, sql: string) => Promise
     }
   }
 }
