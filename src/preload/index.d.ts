@@ -4,7 +4,7 @@ declare global {
   interface Window {
     electron: ElectronAPI
     api: {
-      hideWindow: () => void
+      hideHomeWindow: () => void
       setIgnoreMouseEvents: (isIgnore: boolean) => void
       openWindow: (winType: WindowNameType) => void
       sql: (queryType: string, sql: string) => Promise

@@ -30,7 +30,7 @@ const copyContent = async (index: number) => {
   if (dataL.value) {
     await navigator.clipboard.writeText(store.searchData[index].content)
     store.$reset()
-    window.api.hideWindow()
+    window.api.hideHomeWindow()
   }
 }
 const changeData = (event: KeyboardEvent) => {
