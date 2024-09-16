@@ -22,7 +22,8 @@
       </ul>
     </div>
     <div class="w-48 p-2 bg-gray-100">
-      <ul>
+      <Plus theme="outline" size="16" class="float-right" />
+      <ul class="clear-right">
         <li class="active mb-2 cursor-pointer">标题1</li>
         <li class="mb-2 cursor-pointer">标题1</li>
         <li class="mb-2 cursor-pointer">标题1</li>
