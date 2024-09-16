@@ -47,29 +47,3 @@ export const returnDelete = (sql: string) => {
     console.log(this.changes)
   })
 }
-
-// db.exec(`
-//   INSERT INTO category (
-//     title,
-//     created_at,
-//     updated_at
-//   ) VALUES (
-//     '默认分类',
-//     datetime('now','localtime'),
-//     datetime()
-//   )
-// `)
-
-// db.exec(`
-// INSERT INTO content (
-//   title,
-//   content,
-//   created_at,
-//   updated_at
-// ) VALUES (
-//   '默认分类',
-//   'D/HONG',
-//   datetime('now','localtime'),
-//   datetime()
-// )
-// `)
