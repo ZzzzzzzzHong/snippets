@@ -21,6 +21,6 @@ type ContentType = {
   group_id: number
   title: string
   content: string
-  create_at: string
-  update_at: string
+  created_at: string
+  updated_at: string
 }
