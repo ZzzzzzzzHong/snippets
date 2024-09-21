@@ -19,6 +19,7 @@ type CategoryType = {
 type ContentType = {
   id: number
   group_id: number
+  group_name: string
   title: string
   content: string
   created_at: string
