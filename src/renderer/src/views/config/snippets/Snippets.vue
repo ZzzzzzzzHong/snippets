@@ -55,11 +55,12 @@
 import { FolderCodeOne, Plus, Search } from '@icon-park/vue-next'
 import { computed, onMounted, ref } from 'vue'
 import SnippetDetail from './SnippetDetail.vue'
+import SqlSnippets from '@renderer/sql/snippets/sqlSnippets'
 
 const groups = ref<CategoryType[]>([])
 const activeGroupId = ref(0)
 const getCategoryGroups = async () => {
-  return window.api.sql('returnFindAll', 'select * from categoryGroups')
+  return window.api.sql('returnFindAll', SqlSnippets.selectGroups())
 }
 
 const listData = ref<ContentType[]>([])
@@ -67,17 +68,7 @@ const activeDataId = ref(0)
 const getDataByGroupId = async (groupId?: number) => {
   return window.api.sql(
     'returnFindAll',
-    `SELECT
-      c.id,
-      c.content,
-      c.title,
-      c.updated_at,
-      cg.title AS group_name
-    FROM
-      contents AS c
-      JOIN categoryGroups AS cg ON c.group_id = cg.id 
-    WHERE
-      group_id = ${groupId};`
+    SqlSnippets.selectContentsByGroupId(groupId)
   )
 }
 const detail = computed<ContentType | null>(() => {
