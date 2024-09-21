@@ -15,28 +15,101 @@
         </a-button>
       </div>
       <ul class="mt-2 bg-gray-50">
-        <li class="active mb-2 cursor-pointer">分组1</li>
-        <li class="mb-2 cursor-pointer">分组1</li>
-        <li class="mb-2 cursor-pointer">分组1</li>
-        <li class="mb-2 cursor-pointer">分组1</li>
+        <li
+          v-for="group in groups"
+          :key="group.id"
+          class="p-1 cursor-pointer"
+          :class="{ active: group.id === activeGroupId }"
+          @click="handleChange('group', group.id)"
+        >
+          {{ group.title }}
+        </li>
       </ul>
     </div>
     <div class="w-48 p-2 bg-gray-100">
       <Plus theme="outline" size="16" class="float-right" />
-      <ul class="clear-right">
-        <li class="active mb-2 cursor-pointer">标题1</li>
-        <li class="mb-2 cursor-pointer">标题1</li>
-        <li class="mb-2 cursor-pointer">标题1</li>
-        <li class="mb-2 cursor-pointer">标题1</li>
+      <ul v-if="listData.length" class="clear-right">
+        <li
+          v-for="data in listData"
+          :key="data.id"
+          class="p-1 cursor-pointer"
+          :class="{ active: data.id === activeDataId }"
+          @click="handleChange('data', data.id)"
+        >
+          {{ data.title }}
+        </li>
       </ul>
+      <div v-else class="clear-right py-8 text-center text-gray-400">
+        <FolderCodeOne class="text-5xl mb-1" :stroke-width="1" />
+        <p>该分组暂无片段</p>
+        <p>快去添加属于你自己的片段吧</p>
+      </div>
     </div>
     <div class="flex-1 bg-gray-200">
-      <SnippetsDetail></SnippetsDetail>
+      <SnippetDetail :snippet-detail="detail"></SnippetDetail>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Plus, Search } from '@icon-park/vue-next'
-import SnippetsDetail from './SnippetsDetail.vue'
+import { FolderCodeOne, Plus, Search } from '@icon-park/vue-next'
+import { computed, onMounted, ref } from 'vue'
+import SnippetDetail from './SnippetDetail.vue'
+
+const groups = ref<CategoryType[]>([])
+const activeGroupId = ref(0)
+const getCategoryGroups = async () => {
+  return window.api.sql('returnFindAll', 'select * from categoryGroups')
+}
+
+const listData = ref<ContentType[]>([])
+const activeDataId = ref(0)
+const getDataByGroupId = async (groupId?: number) => {
+  return window.api.sql(
+    'returnFindAll',
+    `SELECT
+      c.id,
+      c.content,
+      c.title,
+      c.updated_at,
+      cg.title AS group_name
+    FROM
+      contents AS c
+      JOIN categoryGroups AS cg ON c.group_id = cg.id 
+    WHERE
+      group_id = ${groupId};`
+  )
+}
+const detail = computed<ContentType | null>(() => {
+  return listData.value.find((item) => item.id === activeDataId.value) || null
+})
+
+const handleChange = async (type: 'group' | 'data', id: number) => {
+  switch (type) {
+    case 'group':
+      activeGroupId.value = id
+      listData.value = await getDataByGroupId(id)
+      console.log('listData.value', listData.value)
+
+      activeDataId.value = listData.value[0]?.id
+      break
+    case 'data':
+      activeDataId.value = id
+      break
+    default:
+      break
+  }
+}
+
+onMounted(async () => {
+  groups.value = await getCategoryGroups()
+  listData.value = await getDataByGroupId(groups.value[0].id)
+  activeDataId.value = groups.value[0].id
+})
 </script>
+
+<style lang="less" scoped>
+.active {
+  @apply bg-gray-200 text-blue-500;
+}
+</style>
