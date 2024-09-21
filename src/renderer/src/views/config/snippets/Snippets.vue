@@ -80,8 +80,6 @@ const handleChange = async (type: 'group' | 'data', id: number) => {
     case 'group':
       activeGroupId.value = id
       listData.value = await getDataByGroupId(id)
-      console.log('listData.value', listData.value)
-
       activeDataId.value = listData.value[0]?.id
       break
     case 'data':
