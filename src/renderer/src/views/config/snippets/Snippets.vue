@@ -2,9 +2,9 @@
   <div class="flex text-xs h-full">
     <div class="p-2">
       <div class="w-40 flex">
-        <a-input>
+        <a-input v-model:value="searchKey" @change="handleSearch(searchKey)">
           <template #prefix>
-            <search theme="outline" size="16" fill="#333" />
+            <search class="cursor-pointer" @click="handleSearch(searchKey)" />
           </template>
         </a-input>
         <a-button
@@ -33,7 +33,10 @@
           v-for="data in listData"
           :key="data.id"
           class="p-1 cursor-pointer"
-          :class="{ active: data.id === activeDataId }"
+          :class="{
+            active: data.id === activeDataId,
+            'text-cyan-400': searchKey && data.title.indexOf(searchKey) > -1
+          }"
           @click="handleChange('data', data.id)"
         >
           {{ data.title }}
@@ -53,16 +56,30 @@
 
 <script lang="ts" setup>
 import { FolderCodeOne, Plus, Search } from '@icon-park/vue-next'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, shallowRef, watch } from 'vue'
 import SnippetDetail from './SnippetDetail.vue'
 import SqlSnippets from '@renderer/sql/snippets/sqlSnippets'
 
-const groups = ref<CategoryType[]>([])
+// 分组
+const groups = shallowRef<CategoryType[]>([])
 const activeGroupId = ref(0)
-const getCategoryGroups = async () => {
-  return window.api.sql('returnFindAll', SqlSnippets.selectGroups())
+const getCategoryGroups = async (key?: string) => {
+  return key
+    ? window.api.sql('returnFindAll', SqlSnippets.selectGroupsBySearchKey(key))
+    : window.api.sql('returnFindAll', SqlSnippets.selectGroups())
+}
+watch(groups, async (nVal) => {
+  activeGroupId.value = nVal[0].id
+  listData.value = await getDataByGroupId(nVal[0].id)
+  activeDataId.value = listData.value[0]?.id
+})
+// 分组搜索
+const searchKey = ref('')
+const handleSearch = async (key: string) => {
+  groups.value = await getCategoryGroups(key)
 }
 
+// 内容
 const listData = ref<ContentType[]>([])
 const activeDataId = ref(0)
 const getDataByGroupId = async (groupId?: number) => {
@@ -92,8 +109,6 @@ const handleChange = async (type: 'group' | 'data', id: number) => {
 
 onMounted(async () => {
   groups.value = await getCategoryGroups()
-  listData.value = await getDataByGroupId(groups.value[0].id)
-  activeDataId.value = groups.value[0].id
 })
 </script>
 
