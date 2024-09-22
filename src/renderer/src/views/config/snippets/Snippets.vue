@@ -69,8 +69,9 @@ const getCategoryGroups = async (key?: string) => {
     : window.api.sql('returnFindAll', SqlSnippets.selectGroups())
 }
 watch(groups, async (nVal) => {
-  activeGroupId.value = nVal[0].id
-  listData.value = await getDataByGroupId(nVal[0].id)
+  const id = nVal[0]?.id
+  activeGroupId.value = id
+  listData.value = id ? await getDataByGroupId(nVal[0]?.id) : []
   activeDataId.value = listData.value[0]?.id
 })
 // 分组搜索
