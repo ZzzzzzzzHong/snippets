@@ -18,7 +18,9 @@
       </div>
     </div>
     <!-- 内容 -->
-    <div class="flex-1 mt-2 bg-gray-100">{{ snippetDetail.content }}</div>
+    <div class="flex-1 mt-2 bg-gray-100" contenteditable="plaintext-only">
+      {{ snippetDetail.content }}
+    </div>
   </div>
   <div
     v-else
