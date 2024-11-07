@@ -1,5 +1,5 @@
-import { Button, Input } from 'ant-design-vue'
+import { Button, Form, Input, Modal } from 'ant-design-vue'
 
-const componentList = Object.values({ Button, Input })
+const componentList = Object.values({ Button, Form, Input, Modal })
 
 export default componentList
