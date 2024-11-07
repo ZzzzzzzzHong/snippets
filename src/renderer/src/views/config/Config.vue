@@ -9,11 +9,11 @@
       <ul class="w-20 mt-1 text-center text-lg">
         <li>
           <BookOne theme="outline" />
-          <P>片段</P>
+          <p>片段</p>
         </li>
         <li>
           <SettingConfig theme="outline" />
-          <P>设置</P>
+          <p>设置</p>
         </li>
       </ul>
       <div
