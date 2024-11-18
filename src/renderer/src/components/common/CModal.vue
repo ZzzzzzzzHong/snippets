@@ -27,6 +27,8 @@ const handleOk = () => {
 }
 
 defineExpose({
-  init
+  init,
+  close,
+  handleOk
 })
 </script>
