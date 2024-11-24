@@ -25,3 +25,20 @@ type ContentType = {
   created_at: string
   updated_at: string
 }
+
+// 表单类型
+type FormItemType = {
+  key: string
+  label?: string
+  type: string
+  placeholder?: string
+  required?: boolean
+  disabled?: boolean
+  rules?: Array<object>
+}
+type FormButtom = {
+  label: string
+  type?: string
+  key: string
+  callback: (formD: object, key: string) => void
+}
