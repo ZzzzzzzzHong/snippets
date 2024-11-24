@@ -10,6 +10,7 @@
         <a-button
           type="primary"
           class="ml-1 w-4 flex justify-center items-center"
+          @click="addSnippets?.init()"
         >
           <Plus theme="outline" size="16" />
         </a-button>
@@ -52,13 +53,25 @@
       <SnippetDetail :snippet-detail="detail"></SnippetDetail>
     </div>
   </div>
+  <AddDialog ref="addSnippets" title="添加分组" :footer="null">
+    <AddForm
+      ref="addForm"
+      :form="formData"
+      :form-item="createRules(formItem)"
+      :form-buttom="formButtom"
+      :loading="formLoading"
+    ></AddForm>
+  </AddDialog>
 </template>
 
 <script lang="ts" setup>
 import { FolderCodeOne, Plus, Search } from '@icon-park/vue-next'
-import { computed, onMounted, ref, shallowRef, watch } from 'vue'
+import { computed, onMounted, reactive, ref, shallowRef, watch } from 'vue'
 import SnippetDetail from './SnippetDetail.vue'
+import AddDialog from '@renderer/components/common/CModal.vue'
+import AddForm from '@renderer/components/common/CForm.vue'
 import SqlSnippets from '@renderer/sql/snippets/sqlSnippets'
+import createRules from '@renderer/utils/createRules'
 
 // 分组
 const groups = shallowRef<CategoryType[]>([])
@@ -107,6 +120,45 @@ const handleChange = async (type: 'group' | 'data', id: number) => {
       break
   }
 }
+
+// 新增弹窗
+const addSnippets = ref<InstanceType<typeof AddDialog>>()
+const addForm = ref<InstanceType<typeof AddForm>>()
+const formData = reactive({ groupName: '' })
+const formItem = reactive([
+  {
+    key: 'groupName',
+    label: '名称',
+    type: 'input',
+    required: true,
+    placeholder: '请输入分组名称'
+  }
+])
+const formButtom = reactive<FormButtom[]>([
+  {
+    label: '取消',
+    key: 'cancel',
+    callback: () => {
+      addSnippets.value?.close()
+    }
+  },
+  {
+    label: '确定',
+    key: 'submit',
+    type: 'primary',
+    callback: (formD) => {
+      Object.assign(formData, formD)
+      formLoading.value = true
+      setTimeout(() => {
+        formData.groupName = ''
+        console.log('dadada')
+        formLoading.value = false
+        addSnippets.value?.close()
+      }, 3000)
+    }
+  }
+])
+const formLoading = ref(false)
 
 onMounted(async () => {
   groups.value = await getCategoryGroups()
