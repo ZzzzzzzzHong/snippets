@@ -2,7 +2,7 @@ class SqlSnippets {
   // constructor() {}
   // 获取分组
   selectGroups = () => {
-    return 'select * from categoryGroups;'
+    return 'SELECT * FROM categoryGroups;'
   }
   selectGroupsBySearchKey = (searchKey?: string) => {
     return `
