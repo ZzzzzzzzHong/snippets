@@ -22,11 +22,13 @@ export const returnFindOne = (sql: string) => {
 }
 
 export const returnInsert = (sql: string) => {
-  db.prepare(sql).run(function (this: RunResult, err: Error | null) {
-    if (err) {
-      throw err
-    }
-    console.log(this.lastID)
+  return new Promise((resolve, reject) => {
+    db.prepare(sql).run(function (this: RunResult, err: Error | null) {
+      if (err) {
+        reject(err)
+      }
+      resolve(this.lastID)
+    })
   })
 }
 
