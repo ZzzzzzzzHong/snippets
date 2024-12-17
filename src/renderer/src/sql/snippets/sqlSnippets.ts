@@ -15,6 +15,24 @@ class SqlSnippets {
         EXISTS ( SELECT * FROM contents AS c WHERE cg.id = c.group_id AND c.title LIKE '%${searchKey}%' );
     `
   }
+  // 添加分组
+  insertGroup = (title: string) => {
+    return `
+      INSERT INTO categoryGroups ( title, created_at, updated_at )
+      VALUES
+        ( '${title}', datetime( 'now', 'localtime' ), datetime( 'now', 'localtime' ) );
+    `
+  }
+  // 删除分组
+  deleteGroup = (groupId: number) => {
+    return `
+      DELETE 
+      FROM
+        categoryGroups 
+      WHERE
+        id = ${groupId};
+    `
+  }
 
   // 获取内容
   selectContentsByGroupId = (groupId?: number) => {
