@@ -10,7 +10,7 @@
         <a-button
           type="primary"
           class="ml-1 w-4 flex justify-center items-center"
-          @click="addSnippets?.init()"
+          @click="addSnippetGroup?.init()"
         >
           <Plus theme="outline" size="16" />
         </a-button>
@@ -34,7 +34,8 @@
     </div>
     <div class="w-48 p-2 bg-gray-100">
       <Plus theme="outline" size="16" class="float-right cursor-pointer" />
-      <ul v-if="listData.length" class="clear-right">
+      <ul v-if="listData.length" class="pt-1 clear-right">
+        <li class="p-1 cursor-pointer" contenteditable="true"></li>
         <li
           v-for="data in listData"
           :key="data.id"
@@ -61,7 +62,7 @@
       <SnippetDetail :snippet-detail="detail"></SnippetDetail>
     </div>
   </div>
-  <AddGroupDialog ref="addSnippets" title="添加分组" :footer="null">
+  <AddGroupDialog ref="addSnippetGroup" title="添加分组" :footer="null">
     <AddGroupForm
       ref="addForm"
       :form="formData"
@@ -142,7 +143,7 @@ const handleChange = async (type: 'group' | 'data', id: number) => {
 }
 
 // 新增弹窗
-const addSnippets = ref<InstanceType<typeof AddGroupDialog>>()
+const addSnippetGroup = ref<InstanceType<typeof AddGroupDialog>>()
 const addForm = ref<InstanceType<typeof AddGroupForm>>()
 const formData = reactive({ groupName: '' })
 const formItem = reactive([
@@ -159,7 +160,7 @@ const formButtom = reactive<FormButtom[]>([
     label: '取消',
     key: 'cancel',
     callback: () => {
-      addSnippets.value?.close()
+      addSnippetGroup.value?.close()
     }
   },
   {
@@ -174,7 +175,7 @@ const formButtom = reactive<FormButtom[]>([
         SqlSnippets.insertGroup(formData.groupName)
       )
       if (res) {
-        addSnippets.value?.close()
+        addSnippetGroup.value?.close()
         formData.groupName = ''
         groups.value = await getCategoryGroups()
       }
