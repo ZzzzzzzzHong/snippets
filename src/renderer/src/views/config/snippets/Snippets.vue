@@ -33,9 +33,22 @@
       </ul>
     </div>
     <div class="w-48 p-2 bg-gray-100">
-      <Plus theme="outline" size="16" class="float-right cursor-pointer" />
-      <ul v-if="listData.length" class="pt-1 clear-right">
-        <li class="p-1 cursor-pointer" contenteditable="true"></li>
+      <Plus
+        theme="outline"
+        size="16"
+        class="float-right cursor-pointer"
+        @click="openAddBox"
+      />
+      <ul v-if="listData.length || isShowAddBox" class="pt-1 clear-right">
+        <li
+          v-if="isShowAddBox"
+          ref="addBox"
+          class="p-1 cursor-pointer border-gray-400 border border-solid outline-none overflow-hidden text-nowrap"
+          contenteditable="true"
+          spellcheck="false"
+          @blur="handleAddBox"
+          @keydown.enter="handleAddBox"
+        ></li>
         <li
           v-for="data in listData"
           :key="data.id"
@@ -86,7 +99,15 @@
 
 <script lang="ts" setup>
 import { DeleteThemes, FolderCodeOne, Plus, Search } from '@icon-park/vue-next'
-import { computed, onMounted, reactive, ref, shallowRef, watch } from 'vue'
+import {
+  computed,
+  onMounted,
+  reactive,
+  ref,
+  shallowRef,
+  watch,
+  nextTick
+} from 'vue'
 import SnippetDetail from './SnippetDetail.vue'
 import AddGroupDialog from '@renderer/components/common/CModal.vue'
 import AddGroupForm from '@renderer/components/common/CForm.vue'
@@ -197,6 +218,30 @@ const handleDeleteGroup = async () => {
   window.api.sql('returnDelete', SqlSnippets.deleteGroup(id))
   groups.value = groups.value.filter((item) => item.id !== id)
   deleteSnippets.value?.close()
+}
+
+// 添加片段
+const addBox = ref<HTMLElement | null>(null)
+const isShowAddBox = ref<boolean>(false)
+const openAddBox = () => {
+  isShowAddBox.value = true
+  nextTick(() => {
+    addBox.value?.focus()
+  })
+}
+const handleAddBox = async () => {
+  if (addBox.value) {
+    const value = addBox.value.innerText
+    if (value) {
+      const insertId = await window.api.sql(
+        'returnInsert',
+        SqlSnippets.insertContent(activeGroupId.value, value)
+      )
+      listData.value = await getDataByGroupId(activeGroupId.value)
+      activeDataId.value = insertId
+    }
+    isShowAddBox.value = false
+  }
 }
 
 onMounted(async () => {

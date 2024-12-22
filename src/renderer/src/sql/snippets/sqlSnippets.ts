@@ -34,6 +34,14 @@ class SqlSnippets {
     `
   }
 
+  // 添加内容
+  insertContent = (groupId: number, title: string, content: string = '') => {
+    return `
+      INSERT INTO contents ( group_id, title, content, created_at, updated_at )
+      VALUES
+        ( ${groupId}, '${title}', '${content}', datetime( 'now', 'localtime' ), datetime( 'now', 'localtime' ) );
+    `
+  }
   // 获取内容
   selectContentsByGroupId = (groupId?: number) => {
     return `
