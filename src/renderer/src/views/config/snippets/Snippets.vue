@@ -24,7 +24,7 @@
           @click="handleChange('group', group.id)"
         >
           {{ group.title }}
-          <DeleteThemes
+          <ReduceOne
             theme="outline"
             fill="#333"
             @click="openDeleteDialog(group)"
@@ -98,7 +98,7 @@
 </template>
 
 <script lang="ts" setup>
-import { DeleteThemes, FolderCodeOne, Plus, Search } from '@icon-park/vue-next'
+import { FolderCodeOne, Plus, ReduceOne, Search } from '@icon-park/vue-next'
 import {
   computed,
   onMounted,
