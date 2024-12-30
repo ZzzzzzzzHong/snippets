@@ -42,6 +42,16 @@ class SqlSnippets {
         ( ${groupId}, '${title}', '${content}', datetime( 'now', 'localtime' ), datetime( 'now', 'localtime' ) );
     `
   }
+  // 删除内容
+  deleteContent = (contentId: number) => {
+    return `
+      DELETE 
+      FROM
+        contents 
+      WHERE
+        id = ${contentId};
+    `
+  }
   // 获取内容
   selectContentsByGroupId = (groupId?: number) => {
     return `

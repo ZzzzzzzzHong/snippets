@@ -5,11 +5,16 @@
       <div class="flex justify-between">
         <div>
           <span class="text-xl font-bold pr-1">{{ snippetDetail.title }}</span>
-          <Edit theme="outline" fill="#333" />
+          <Edit theme="outline" fill="#333" class="cursor-pointer" />
         </div>
         <div>
-          <MemoryCardOne theme="outline" fill="#333" />
-          <DeleteThemes theme="outline" fill="#333" />
+          <MemoryCardOne theme="outline" fill="#333" class="cursor-pointer" />
+          <Delete
+            class="cursor-pointer ml-1"
+            theme="outline"
+            fill="#333"
+            @click="deleteSnippet(snippetDetail.id)"
+          />
         </div>
       </div>
       <div class="mt-2 flex justify-between">
@@ -32,14 +37,21 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  FileCode,
-  MemoryCardOne,
-  DeleteThemes,
-  Edit
-} from '@icon-park/vue-next'
+import { Delete, Edit, FileCode, MemoryCardOne } from '@icon-park/vue-next'
+import sqlSnippets from '@renderer/sql/snippets/sqlSnippets'
 
 defineProps<{
   snippetDetail: ContentType | null
 }>()
+const emit = defineEmits(['handleDelete'])
+
+const deleteSnippet = async (id: number) => {
+  const isDel = await window.api.sql(
+    'returnDelete',
+    sqlSnippets.deleteContent(id)
+  )
+  if (isDel) {
+    emit('handleDelete')
+  }
+}
 </script>

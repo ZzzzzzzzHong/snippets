@@ -42,10 +42,12 @@ export const returnUpdate = (sql: string) => {
 }
 
 export const returnDelete = (sql: string) => {
-  db.prepare(sql).run(function (this: RunResult, err: Error | null) {
-    if (err) {
-      throw err
-    }
-    console.log(this.changes)
+  return new Promise((resolve, reject) => {
+    db.prepare(sql).run(function (this: RunResult, err: Error | null) {
+      if (err) {
+        reject(err)
+      }
+      resolve(this.changes)
+    })
   })
 }

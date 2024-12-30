@@ -72,7 +72,12 @@
       </div>
     </div>
     <div class="flex-1 bg-gray-200">
-      <SnippetDetail :snippet-detail="detail"></SnippetDetail>
+      <SnippetDetail
+        :snippet-detail="detail"
+        @handle-delete="
+          async () => (listData = await getDataByGroupId(activeGroupId))
+        "
+      ></SnippetDetail>
     </div>
   </div>
   <AddGroupDialog ref="addSnippetGroup" title="添加分组" :footer="null">
