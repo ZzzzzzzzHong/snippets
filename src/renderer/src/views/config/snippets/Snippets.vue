@@ -1,7 +1,7 @@
 <template>
   <div class="flex text-xs h-full">
-    <div class="p-2">
-      <div class="w-40 flex">
+    <div class="w-48 p-2">
+      <div class="flex">
         <a-input v-model:value="searchKey" @change="handleSearch(searchKey)">
           <template #prefix>
             <search class="cursor-pointer" @click="handleSearch(searchKey)" />
@@ -19,11 +19,11 @@
         <li
           v-for="group in groups"
           :key="group.id"
-          class="p-1 cursor-pointer"
+          class="p-1 cursor-pointer flex justify-between"
           :class="{ active: group.id === activeGroupId }"
           @click="handleChange('group', group.id)"
         >
-          {{ group.title }}
+          <p class="truncate">{{ group.title }}</p>
           <ReduceOne
             theme="outline"
             fill="#333"
@@ -43,7 +43,7 @@
         <li
           v-if="isShowAddBox"
           ref="addBox"
-          class="p-1 cursor-pointer border-gray-400 border border-solid outline-none overflow-hidden text-nowrap"
+          class="gen-editable cursor-pointer border-gray-400 border border-solid text-nowrap"
           contenteditable="true"
           spellcheck="false"
           @blur="handleAddBox"
@@ -74,6 +74,7 @@
     <div class="flex-1 bg-gray-200">
       <SnippetDetail
         :snippet-detail="detail"
+        :snippet-group="groups"
         @handle-delete="
           async () => (listData = await getDataByGroupId(activeGroupId))
         "
@@ -149,8 +150,11 @@ const getDataByGroupId = async (groupId?: number) => {
     SqlSnippets.selectContentsByGroupId(groupId)
   )
 }
-const detail = computed<ContentType | null>(() => {
-  return listData.value.find((item) => item.id === activeDataId.value) || null
+const detail = computed<ContentType>(() => {
+  return (
+    listData.value.find((item) => item.id === activeDataId.value) ||
+    ({} as ContentType)
+  )
 })
 
 const handleChange = async (type: 'group' | 'data', id: number) => {

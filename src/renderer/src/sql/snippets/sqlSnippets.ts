@@ -60,13 +60,18 @@ class SqlSnippets {
         c.content,
         c.title,
         c.updated_at,
+        c.group_id,
         cg.title AS group_name
       FROM
         contents AS c
-        JOIN categoryGroups AS cg ON c.group_id = cg.id 
+        JOIN categoryGroups AS cg ON c.group_id = cg.id
       WHERE
         group_id = ${groupId};
       `
+  }
+  // 修改内容
+  updateContent = (content: ContentType) => {
+    console.log(content)
   }
 }
 
